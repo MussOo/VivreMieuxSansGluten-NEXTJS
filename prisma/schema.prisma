@@ -14,27 +14,33 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String
-  password  String
-  type      String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Event     Event[]
-  Receipt   Receipt[]
+  id             Int       @id @default(autoincrement())
+  email          String    @unique
+  name           String
+  password       String
+  type           String
+  password_reset Boolean
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  Event          Event[]
+  Receipt        Receipt[]
 }
 
 model Event {
   id          Int      @id @default(autoincrement())
   title       String
   description String
-  date        DateTime
-  location    String
+  date_start  DateTime
+  date_end    DateTime
+  adress      String
+  zip         String
+  city        String
+  country     String
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  Image       Image[]
 }
 
 model Receipt {
@@ -50,6 +56,7 @@ model Receipt {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   Step        Step[]
+  Image       Image[]
 }
 
 model Step {
@@ -60,6 +67,7 @@ model Step {
   updatedAt DateTime @updatedAt
   receiptid Int
   receipt   Receipt  @relation(fields: [receiptid], references: [id])
+  Image     Image[]
 }
 
 model Category {
@@ -68,4 +76,15 @@ model Category {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Receipt   Receipt[]
+}
+
+model Image {
+  id        Int      @id @default(autoincrement())
+  file      Bytes
+  eventid   Int?
+  event     Event?   @relation(fields: [eventid], references: [id])
+  receiptid Int?
+  receipt   Receipt? @relation(fields: [receiptid], references: [id])
+  stepid    Int?
+  step      Step?    @relation(fields: [stepid], references: [id])
 }
