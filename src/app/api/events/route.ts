@@ -1,8 +1,26 @@
 'use server';
 import { NextResponse } from 'next/server';
 import prisma from '../../../lib/connect';
+import next, { NextApiRequest } from 'next';
 
 
+export const GET = async (req: NextApiRequest, res: Response) => {
+  try {
+    let params = new URL(req.url).searchParams;
+    const events = await prisma.event.findMany({
+      skip: parseInt(params.get('page')) || 0,
+      take: 6,
+      include: {
+        Image: true,
+      },
+    });
+
+    return NextResponse.json({ data: events }, { status: 200 });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: error }, { status: 500 });
+  }
+}
 
 
 export const POST = async (req: Request, res: Response) => {

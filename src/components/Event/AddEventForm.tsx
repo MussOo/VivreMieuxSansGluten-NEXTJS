@@ -1,9 +1,6 @@
 "use client";
 import UseCreateEvent from "@/app/hooks/useCreateEvent";
-import { WindIcon } from "lucide-react";
-import { redirect } from "next/navigation";
 import { FormEvent, useState } from "react";
-import { text } from "stream/consumers";
 import swal from "sweetalert";
 
 export default function AddEventForm() {
