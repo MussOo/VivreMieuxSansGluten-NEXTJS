@@ -6,27 +6,38 @@ import useEvent from "../hooks/useEvent";
 import Pagination from "@/components/Pagination";
 import { useState } from "react";
 export default function EvenementsPage() {
-  const [page, setPage] = useState(1);
+  const [showevent, setShowEvent] = useState(false);
+  const [page, setPage] = useState(0);
   const { events } = useEvent(page);
 
   return (
     <main className="mt-24">
-      {/* <ShowEvenementPage /> */}
       <div className="container px-6 py-12 mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {events.map((event) => (
           <div
             key={event.id}
             className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           >
-            <a href="#">
+            {event.Image ? (
+              event.Image.map((image) => (
+                <image
+                  key={image.id}
+                  href={"data:image/png;base64," + btoa(image.file.data)}
+                  alt={event.title}
+                  width={600}
+                  height={400}
+                  className="w-full h-64 object-cover object-center rounded-t-lg"
+                />
+              ))
+            ) : (
               <Image
                 src={background_ble}
-                width={650}
-                height={650}
-                alt="Flowbite Logo"
-                className="relative bg-cover content-center object-cover object-center"
+                alt={event.title}
+                width={600}
+                height={400}
+                className="w-full h-64 object-cover object-center rounded-t-lg"
               />
-            </a>
+            )}
             <div className="p-5">
               <a href="#">
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -42,9 +53,19 @@ export default function EvenementsPage() {
                     {event.city}
                   </span>
                 </div>
+                {showevent && (
+                  <ShowEvenementPage
+                    event={event}
+                    setShowEvent={setShowEvent}
+                  />
+                )}
                 <a
                   href="#"
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={() => {
+                    setShowEvent(true);
+                    console.log(event);
+                  }}
                 >
                   Read more
                   <svg

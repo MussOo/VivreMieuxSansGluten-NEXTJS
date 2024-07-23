@@ -13,6 +13,9 @@ export const GET = async (req: NextApiRequest, res: Response) => {
       include: {
         Image: true,
       },
+      orderBy: {
+        id : 'desc'
+      }
     });
 
     return NextResponse.json({ data: events }, { status: 200 });
@@ -45,7 +48,7 @@ export const POST = async (req: Request, res: Response) => {
 
     let multiple_i = data.image.map((i) => {
         return {
-            file: btoa(i),
+            file: i,
             eventid: event.id,
             receiptid: null,
             stepid: null,
