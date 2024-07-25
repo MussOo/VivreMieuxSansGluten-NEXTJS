@@ -1,10 +1,23 @@
 "use client";
 import Image from "next/image";
 import background_ble from "../../../public/img/ble.jpg";
-import ShowEvenementPage from "./[...slug].tsx/page";
+import ShowEvenementPage from "./[eventId]/page";
 import useEvent from "../hooks/useEvent";
 import Pagination from "@/components/Pagination";
 import { useState } from "react";
+import toBase64 from "../function/getImageFile";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+var settings = {
+  dots: false,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+};
 export default function EvenementsPage() {
   const [showevent, setShowEvent] = useState(false);
   const [page, setPage] = useState(0);
@@ -19,16 +32,22 @@ export default function EvenementsPage() {
             className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           >
             {event.Image ? (
-              event.Image.map((image) => (
-                <image
-                  key={image.id}
-                  href={"data:image/png;base64," + btoa(image.file.data)}
-                  alt={event.title}
-                  width={600}
-                  height={400}
-                  className="w-full h-64 object-cover object-center rounded-t-lg"
-                />
-              ))
+              <Slider {...settings}>
+                {event.Image &&
+                  event.Image.map((image, k) => (
+                    <div key={k}>
+                      <Image
+                        src={
+                          "data:image/png;base64," + toBase64(image.file.data)
+                        }
+                        alt="event"
+                        width={400}
+                        height={200}
+                        className="object-cover w-full h-48 md:w-full lg:w-full rounded-t-lg"
+                      />
+                    </div>
+                  ))}
+              </Slider>
             ) : (
               <Image
                 src={background_ble}
@@ -53,19 +72,9 @@ export default function EvenementsPage() {
                     {event.city}
                   </span>
                 </div>
-                {showevent && (
-                  <ShowEvenementPage
-                    event={event}
-                    setShowEvent={setShowEvent}
-                  />
-                )}
                 <a
-                  href="#"
+                  href={"evenements/" + event.id}
                   className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  onClick={() => {
-                    setShowEvent(true);
-                    console.log(event);
-                  }}
                 >
                   Read more
                   <svg

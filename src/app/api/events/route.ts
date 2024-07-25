@@ -7,6 +7,7 @@ import next, { NextApiRequest } from 'next';
 export const GET = async (req: NextApiRequest, res: Response) => {
   try {
     let params = new URL(req.url).searchParams;
+    let id = params.get('id') || null;
     const events = await prisma.event.findMany({
       skip: parseInt(params.get('page')) || 0,
       take: 6,
@@ -15,7 +16,10 @@ export const GET = async (req: NextApiRequest, res: Response) => {
       },
       orderBy: {
         id : 'desc'
-      }
+      },
+      where: {
+        id: id ? parseInt(id) : undefined,
+      },
     });
 
     return NextResponse.json({ data: events }, { status: 200 });
@@ -47,14 +51,17 @@ export const POST = async (req: Request, res: Response) => {
     });
 
     let multiple_i = data.image.map((i) => {
+      if (i.data_url) {
+        let file = i.data_url.split(';base64,').pop();
         return {
-            file: i,
-            eventid: event.id,
-            receiptid: null,
-            stepid: null,
-        };
-        }
-    );
+          file: file,
+          eventid: event.id,
+          receiptid: null,
+          stepid: null,
+      };
+      }
+      }
+  );
     const images = await prisma.image.createMany({
         data: multiple_i,
     });

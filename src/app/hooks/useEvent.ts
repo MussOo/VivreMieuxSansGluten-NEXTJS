@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-export default function useEvent(page: number) {
+export default function useEvent(page: number, id: number) {
     const [events, setEvents] = useState([]);
 
     const fetchEvents = async () => {
@@ -12,6 +12,7 @@ export default function useEvent(page: number) {
             const res = await axios.get(`/api/events`,{
                 params: {
                     page: page,
+                    id: id
                 },
             });
             setEvents(res.data.data);

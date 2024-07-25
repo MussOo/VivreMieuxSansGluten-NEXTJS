@@ -2,6 +2,7 @@
 import UseCreateEvent from "@/app/hooks/useCreateEvent";
 import { FormEvent, useState } from "react";
 import swal from "sweetalert";
+import { SelectPicture } from "../SelectPicture";
 
 export default function AddEventForm() {
   const [title, setTitle] = useState("");
@@ -204,26 +205,11 @@ export default function AddEventForm() {
         />
       </div>
       <div className="mb-5">
-        <input
-          type="file"
-          id="image"
-          className="hidden"
-          multiple
-          onChange={(e) => {
-            const files = e.target.files;
-            let read = new FileReader();
-            read.onload = () => {
-              setImage([...image, read.result]);
-            };
-            read.readAsDataURL(files[0]);
+        <SelectPicture
+          setI={(c) => {
+            setImage(c);
           }}
         />
-        <label
-          htmlFor="image"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white cursor-pointer"
-        >
-          Select Images
-        </label>
       </div>
       <div className="mb-5">
         <label

@@ -71,6 +71,14 @@ export default function Navbar() {
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
+                <Link href="/recettes">Recettes</Link>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              >
                 <Link href="/membres">Espace membres</Link>
               </a>
             </li>
