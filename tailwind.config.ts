@@ -4,6 +4,8 @@ import { fontFamily } from "tailwindcss/defaultTheme"
 const config = {
   darkMode: ["class"],
   content: [
+    "./node_modules/flowbite-react/lib/**/*.js",
+    "./public/**/*.html",
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
@@ -83,7 +85,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('daisyui')],
+  plugins: [require("tailwindcss-animate"), require('daisyui'), require("flowbite/plugin")],
 } satisfies Config
 
 export default config
