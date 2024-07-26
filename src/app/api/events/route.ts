@@ -10,7 +10,7 @@ export const GET = async (req: NextApiRequest, res: Response) => {
     let id = params.get('id') || null;
     const events = await prisma.event.findMany({
       skip: parseInt(params.get('page')) || 0,
-      take: 6,
+      take: 9,
       include: {
         Image: true,
       },
@@ -22,9 +22,11 @@ export const GET = async (req: NextApiRequest, res: Response) => {
       },
     });
 
-    return NextResponse.json({ data: events }, { status: 200 });
+    const counts = await prisma.event.count();
+
+    return NextResponse.json({ data: events , count: counts }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    
     return NextResponse.json({ error: error }, { status: 500 });
   }
 }
@@ -68,7 +70,7 @@ export const POST = async (req: Request, res: Response) => {
 
     return NextResponse.json({ event: event, images: images }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    
     return NextResponse.json({ error: error }, { status: 500 });
   }
 }

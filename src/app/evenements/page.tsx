@@ -4,11 +4,12 @@ import background_ble from "../../../public/img/ble.jpg";
 import ShowEvenementPage from "./[eventId]/page";
 import useEvent from "../hooks/useEvent";
 import Pagination from "@/components/Pagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toBase64 from "../function/getImageFile";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loading from "@/components/Loading";
 
 var settings = {
   dots: false,
@@ -19,11 +20,19 @@ var settings = {
   autoplay: true,
 };
 export default function EvenementsPage() {
+  const [LoadingPage, setLoadingPage] = useState(true);
   const [showevent, setShowEvent] = useState(false);
   const [page, setPage] = useState(0);
-  const { events } = useEvent(page);
+  const { events, counts } = useEvent(page);
 
-  return (
+  useEffect(() => {
+    if (events) {
+      setLoadingPage(false);
+    }
+  }, [events]);
+  return LoadingPage ? (
+    <Loading />
+  ) : (
     <main className="mt-24">
       <div className="container px-6 py-12 mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {events.map((event) => (
@@ -98,7 +107,12 @@ export default function EvenementsPage() {
           </div>
         ))}
       </div>
-      <Pagination page={page} setPage={setPage} totalPage={events.length} />
+      <Pagination
+        disabled={counts === events.length}
+        page={page}
+        setPage={setPage}
+        totalPage={Math.ceil(counts / events.length) - 1}
+      />
     </main>
   );
 }

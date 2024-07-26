@@ -1,4 +1,5 @@
 export default function Pagination({
+  disabled,
   page,
   setPage,
   totalPage,
@@ -8,23 +9,23 @@ export default function Pagination({
   totalPage: number;
 }) {
   return (
-    <div className="flex justify-center mt-10">
+    <div className={"flex justify-center mt-10" + (disabled ? " hidden" : "")}>
       <button
         onClick={() => setPage(page - 1)}
-        disabled={page === 1}
-        className="px-3 py-2 mx-1 font-medium text-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
+        disabled={page === 0}
+        className="px-3 py-2 mx-1 font-medium text-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        Previous
+        Précédent
       </button>
       <span className="flex items-center px-3 mx-1 font-medium text-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700">
-        {page} of {totalPage}
+        {page} / {totalPage}
       </span>
       <button
         onClick={() => setPage(page + 1)}
         disabled={page === totalPage}
-        className="px-3 py-2 mx-1 font-medium text-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700"
+        className="px-3 py-2 mx-1 font-medium text-gray-500 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 disabled:opacity-40 disabled:cursor-not-allowed"
       >
-        Next
+        Suivant
       </button>
     </div>
   );
