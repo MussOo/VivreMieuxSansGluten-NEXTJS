@@ -19,7 +19,6 @@ export default function ShowEvenementPage({ params }: { params: any }) {
     if (events.length > 0) {
       setEvent(events[0]);
     }
-    console.log(event);
   }, [events]);
 
   var settings = {

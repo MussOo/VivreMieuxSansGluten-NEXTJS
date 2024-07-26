@@ -24,7 +24,7 @@ export const GET = async (req: NextApiRequest, res: Response) => {
         id: id ? parseInt(id) : undefined
       }
     });
-    console.log(events)
+    
     const counts = await prisma.receipt.count({
       where: {
         categoryId: category ? parseInt(category) : undefined,

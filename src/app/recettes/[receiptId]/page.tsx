@@ -34,7 +34,6 @@ export default function ShowReceipt({ params }) {
     if (receipts.length > 0) {
       setReceipt(receipts[0]);
     }
-    console.log("Recette :", receipt);
   }, [receipts]);
 
   return (

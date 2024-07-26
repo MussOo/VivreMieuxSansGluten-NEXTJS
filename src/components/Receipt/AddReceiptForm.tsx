@@ -56,7 +56,6 @@ export default function AddReceiptForm() {
       });
       let { data, error } = await createStep(steps);
 
-      console.log(data);
       if (error) {
         setError(true);
         swal({

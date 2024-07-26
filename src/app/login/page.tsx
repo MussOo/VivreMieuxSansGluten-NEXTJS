@@ -5,7 +5,6 @@ import useUsers from "../hooks/useUsers";
 export default function LoginPage() {
   const { users, isLoading, isError } = useUsers();
 
-  console.log(users);
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold">Se connecter</h1>
