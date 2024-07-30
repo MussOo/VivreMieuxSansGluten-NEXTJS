@@ -13,6 +13,9 @@ export default function useReceipt({ page = 0, category = null, id = null }: { p
         try {
             const res = await axios.get(`/api/receipt`,
                 {
+                    headers : {
+                        Authorization : `Bearer ${localStorage.getItem('token')}`
+                    },
                     params: {
                         page : page,
                         category : category,

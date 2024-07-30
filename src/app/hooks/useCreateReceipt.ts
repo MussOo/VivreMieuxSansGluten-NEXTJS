@@ -13,9 +13,11 @@ export default function useCreateReceipt(){
             title : string,
             description : string,
             date : Date,
+            IsFree : boolean,
             amount : number,
             category : number,
-            image : any
+            image : any,
+            userId : number
         }
     ) {
         let data = [];
@@ -27,6 +29,7 @@ export default function useCreateReceipt(){
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 },
                 body: JSON.stringify(receipt),
             })

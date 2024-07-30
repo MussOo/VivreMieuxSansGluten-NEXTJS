@@ -10,6 +10,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loading from "@/components/Loading";
+import { useAuth } from "@/context/authContext";
+import Link from "next/link";
 
 var settings = {
   dots: false,
@@ -20,6 +22,7 @@ var settings = {
   autoplay: true,
 };
 export default function EvenementsPage() {
+  const { user } = useAuth();
   const [LoadingPage, setLoadingPage] = useState(true);
   const [showevent, setShowEvent] = useState(false);
   const [page, setPage] = useState(0);
@@ -34,6 +37,19 @@ export default function EvenementsPage() {
     <Loading />
   ) : (
     <main className="mt-24">
+      <div className="container px-6 mx-auto">
+        <h1 className="text-3xl font-semibold text-gray-800 dark:text-white">
+          Evenements
+        </h1>
+        {user && user.type === "admin" ? (
+          <Link
+            href="/evenements/add"
+            className="inline-flex items-center px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Create Event
+          </Link>
+        ) : null}
+      </div>
       <div className="container px-6 py-12 mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-10">
         {events.map((event) => (
           <div

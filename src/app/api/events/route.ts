@@ -2,9 +2,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../lib/connect';
 import next, { NextApiRequest } from 'next';
+import { GetDecoded } from '@/app/function/CheckToken';
 
 
 export const GET = async (req: NextApiRequest, res: Response) => {
+  
   try {
     let params = new URL(req.url).searchParams;
     let id = params.get('id') || null;
@@ -33,6 +35,17 @@ export const GET = async (req: NextApiRequest, res: Response) => {
 
 
 export const POST = async (req: Request, res: Response) => {
+  const token = req.headers.get("Authorization")?.split(" ")[1] ?? null;
+  if(token == null || token == 'null' || token == 'undefined' || token == undefined){
+    return NextResponse.json({ message: "You are not authorized" }, { status: 401 });
+  }
+
+  let user_data = await GetDecoded(token);
+
+  if(user_data.type != 'admin'){
+    return NextResponse.json({ message: "You are not authorized" }, { status: 401 });
+  }
+  
   try {
     let data = await req.json();
     const event = 
@@ -46,12 +59,12 @@ export const POST = async (req: Request, res: Response) => {
         zip: data.zip,
         city: data.city,
         country: data.country,
-        userId : 1,
+        userId : parseInt(data.userId),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     });
-
+    console.log(event);
     let multiple_i = data.image.map((i) => {
       if (i.data_url) {
         let file = i.data_url.split(';base64,').pop();

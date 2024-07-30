@@ -1,7 +1,12 @@
+"use client";
+import { useAuth } from "@/context/authContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 
 export default function Navbar() {
+  const { user } = useAuth();
+
   return (
     <nav className=" dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 bg-blanc-casse">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -14,12 +19,29 @@ export default function Navbar() {
           </span>
         </a>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
-            className="text-white bg-bleu-main hover:bg-jaune-hover hover:text-bleu-main transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            <Link href="/login">Se connecter</Link>
-          </button>
+          {user ? (
+            <button
+              type="button"
+              className="text-white bg-red-600 hover:bg-red-500 transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <a
+                href="#"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                Se déconnecter
+              </a>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="text-white bg-bleu-main hover:bg-jaune-hover hover:text-bleu-main transition-all duration-300 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              <Link href="/login">Se connecter</Link>
+            </button>
+          )}
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
@@ -50,7 +72,17 @@ export default function Navbar() {
           id="navbar-sticky"
         >
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
+            {user && (
+              <li className="bg-jaune-main text-white rounded-lg p-2 h-10 flex items-center justify-center hover:scale-110 transform transition-transform">
+                <a
+                  href="#"
+                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 "
+                >
+                  <Link href="/membres">Espace membres</Link>
+                </a>
+              </li>
+            )}
+            <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
               <a
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -58,7 +90,7 @@ export default function Navbar() {
                 <Link href="/">Accueil</Link>
               </a>
             </li>
-            <li>
+            <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
               <a
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -66,7 +98,7 @@ export default function Navbar() {
                 <Link href="/evenements">Evenements</Link>
               </a>
             </li>
-            <li>
+            <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
               <a
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
@@ -74,15 +106,7 @@ export default function Navbar() {
                 <Link href="/recettes">Recettes</Link>
               </a>
             </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                <Link href="/membres">Espace membres</Link>
-              </a>
-            </li>
-            <li>
+            <li className="text-white rounded-lg p-2 h-10 flex items-center justify-center">
               <a
                 href="#"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"

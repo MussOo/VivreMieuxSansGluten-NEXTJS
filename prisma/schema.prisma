@@ -14,22 +14,24 @@ datasource db {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique
-  name           String
-  password       String
-  type           String
-  password_reset Boolean
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  Event          Event[]
-  Receipt        Receipt[]
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  name              String
+  password          String
+  type              String
+  date_subscription DateTime
+  password_reset    Boolean
+  token_reset       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  Event             Event[]
+  Receipt           Receipt[]
 }
 
 model Event {
   id          Int      @id @default(autoincrement())
   title       String
-  description String
+  description String   @db.Text
   date_start  DateTime
   date_end    DateTime
   adress      String
@@ -46,9 +48,10 @@ model Event {
 model Receipt {
   id          Int      @id @default(autoincrement())
   title       String
-  description String
+  description String   @db.Text
   date        DateTime
   amount      Float
+  IsFree      Boolean  @default(false)
   userId      Int
   user        User     @relation(fields: [userId], references: [id])
   categoryId  Int
@@ -62,7 +65,7 @@ model Receipt {
 model Step {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  content   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   receiptid Int

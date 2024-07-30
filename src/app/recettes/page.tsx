@@ -9,8 +9,10 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loading from "@/components/Loading";
+import { useAuth } from "@/context/authContext";
 
 export default function Page() {
+  const { user } = useAuth();
   const [category_selected, setCategory_selected] = useState(1);
   const [loadingPage, setloadingPage] = useState(true);
   const [page, setPage] = useState(0);
@@ -42,9 +44,21 @@ export default function Page() {
       ) : error ? (
         <div>Error</div>
       ) : (
-        <div>
+        <div className="mt-32">
           {" "}
           <h2 className="text-3xl font-bold text-center ">Recettes</h2>
+          {user && user?.type === "admin" ? (
+            <div className="flex justify-start mt-4 px-4">
+              <a
+                href="/recettes/add"
+                className="px-4 py-2 text-white bg-blue-500 rounded-md"
+              >
+                Ajouter une recette
+              </a>
+            </div>
+          ) : (
+            <></>
+          )}
           <SelectCategory
             setCategory_selected={setCategory_selected}
             category_selected={category_selected}

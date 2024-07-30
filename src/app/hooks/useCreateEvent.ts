@@ -5,7 +5,7 @@ export default function useCreateEvent() {
   const [error, setError] = useState(null);
 
   async function createUser(
-    title,
+     title  ,
       description,
       date_start,
       date_end,
@@ -13,6 +13,7 @@ export default function useCreateEvent() {
       zip,
       city,
       country,
+      userId,
       image
   ) {
     setLoading(true);
@@ -23,6 +24,7 @@ export default function useCreateEvent() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({
           title,
@@ -33,6 +35,7 @@ export default function useCreateEvent() {
           zip,
           city,
           country,
+          userId,
           image,
         }),
       })

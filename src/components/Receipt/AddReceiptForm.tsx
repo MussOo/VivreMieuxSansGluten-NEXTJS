@@ -1,17 +1,20 @@
 import useCategory from "@/app/hooks/useCategory";
 import useCreateReceipt from "@/app/hooks/useCreateReceipt";
-import { FormEvent, useState } from "react";
+import { FormEvent, useActionState, useState } from "react";
 import AddStepForm from "../Step/AddStepForm";
 import { SelectPicture } from "../SelectPicture";
 import useCreateStep from "@/app/hooks/useCreateStep";
 import swal from "sweetalert";
 import ContactPage from "@/app/contact/page";
+import { useAuth } from "@/context/authContext";
 
 export default function AddReceiptForm() {
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
+  const [IsFree, setIsFree] = useState(false);
   const [category, setCategory] = useState(1);
   const [image, setImage] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,11 +32,14 @@ export default function AddReceiptForm() {
       title: title,
       description: description,
       date: new Date(),
+      IsFree: IsFree,
       amount: Number(amount),
       category: category,
       image: image,
+      userId: user.id,
     };
     setLoading(true);
+    console.log(receipt);
     let { data, error } = await createReceipt(receipt);
     receipt = data.data;
     if (error) {
@@ -115,6 +121,18 @@ export default function AddReceiptForm() {
             required
           />
         </div>
+        <label
+          htmlFor="IsFree"
+          className="text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Is Free
+        </label>
+        <input
+          type="checkbox"
+          id="IsFree"
+          onChange={(e) => setIsFree(e.target.checked)}
+          className="p-2 rounded-md"
+        />
         <input
           type="date"
           placeholder="Date"

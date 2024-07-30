@@ -3,8 +3,10 @@ import UseCreateEvent from "@/app/hooks/useCreateEvent";
 import { FormEvent, useState } from "react";
 import swal from "sweetalert";
 import { SelectPicture } from "../SelectPicture";
+import { useAuth } from "@/context/authContext";
 
 export default function AddEventForm() {
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date_start, setDate_start] = useState("");
@@ -30,6 +32,7 @@ export default function AddEventForm() {
       zip,
       city,
       country,
+      userId: user.id,
       image,
     };
     await createUser(
@@ -41,6 +44,7 @@ export default function AddEventForm() {
       zip,
       city,
       country,
+      user.id,
       image
     );
 

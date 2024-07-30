@@ -1,3 +1,4 @@
+import { GetDecoded } from "@/app/function/CheckToken";
 import { NextResponse } from "next/server";
 
 
@@ -29,6 +30,17 @@ export const GET = async (req : Request, res : Response) => {
 }
 
 export const POST = async (req : Request, res : Response) => {
+    const token = req.headers.get("Authorization")?.split(" ")[1] ?? null;
+    if(token != null && token != 'null' && token != 'undefined' && token != undefined){
+      return NextResponse.json({ message: "You are not authorized" }, { status: 401 });
+    }
+  
+    let user_data = await GetDecoded(token);
+  
+    if(user_data.type != 'admin'){
+      return NextResponse.json({ message: "You are not authorized" }, { status: 401 });
+    }
+
     try {
         let data = await req.json();
         let multiple_step = data.map(async (st) => {
