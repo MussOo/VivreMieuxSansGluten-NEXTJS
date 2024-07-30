@@ -12,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Loading from "@/components/Loading";
 import { useAuth } from "@/context/authContext";
 import Link from "next/link";
+import { Event } from "@prisma/client";
 
 var settings = {
   dots: false,
@@ -51,7 +52,7 @@ export default function EvenementsPage() {
         ) : null}
       </div>
       <div className="container px-6 py-12 mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3 mt-10">
-        {events.map((event) => (
+        {events.map((event: Event) => (
           <div
             key={event.id}
             className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"

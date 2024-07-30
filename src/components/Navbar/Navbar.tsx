@@ -1,8 +1,6 @@
 "use client";
 import { useAuth } from "@/context/authContext";
-import Image from "next/image";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
 
 export default function Navbar() {
   const { user } = useAuth();
@@ -74,45 +72,45 @@ export default function Navbar() {
           <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {user && (
               <li className="bg-jaune-main text-white rounded-lg p-2 h-10 flex items-center justify-center hover:scale-110 transform transition-transform">
-                <a
-                  href="#"
+                <Link
+                  href="/membres"
                   className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent  md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 "
                 >
-                  <Link href="/membres">Espace membres</Link>
-                </a>
+                  Espace membres
+                </Link>
               </li>
             )}
             <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
-              <a
-                href="#"
+              <Link
+                href="/"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                <Link href="/">Accueil</Link>
-              </a>
+                Accueil
+              </Link>
             </li>
             <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
-              <a
-                href="#"
+              <Link
+                href="/evenements"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                <Link href="/evenements">Evenements</Link>
-              </a>
+                Evenements
+              </Link>
             </li>
             <li className=" text-white rounded-lg p-2 h-10 flex items-center justify-center">
-              <a
-                href="#"
+              <Link
+                href="/recettes"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                <Link href="/recettes">Recettes</Link>
-              </a>
+                Recettes
+              </Link>
             </li>
             <li className="text-white rounded-lg p-2 h-10 flex items-center justify-center">
-              <a
-                href="#"
+              <Link
+                href="/contact"
                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-jaune-main md:p-0 md:dark:hover:text-jaune-main dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
-                <Link href="/contact">Contact</Link>
-              </a>
+                Contact
+              </Link>
             </li>
           </ul>
         </div>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-export default function useEvent(page: number, id: number) {
+export default function useEvent(page: number, id?: number) {
     const [events, setEvents] = useState([]);
     const [counts, setCounts] = useState(0);
 
